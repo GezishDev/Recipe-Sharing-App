@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import {
-  createRecipe,
-  uploadRecipeImage,
-  updateRecipe,
-} from "../services/recipeService";
-
-
-
+import { createRecipe, uploadRecipeImage } from "../services/recipeService";
 
 const categories = [
   "Breakfast",
@@ -35,7 +28,6 @@ const CreateRecipe = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle ingredient list
   const handleIngredientChange = (index, value) => {
     const newIngredients = [...ingredients];
     newIngredients[index] = value;
@@ -48,8 +40,7 @@ const CreateRecipe = () => {
 
   const removeIngredientField = (index) => {
     if (ingredients.length > 1) {
-      const newIngredients = ingredients.filter((_, i) => i !== index);
-      setIngredients(newIngredients);
+      setIngredients(ingredients.filter((_, i) => i !== index));
     }
   };
 
@@ -59,8 +50,6 @@ const CreateRecipe = () => {
       setError("You must be logged in to create a recipe");
       return;
     }
-
-    // Basic validation
     if (
       !title ||
       !description ||
@@ -78,7 +67,6 @@ const CreateRecipe = () => {
     setError("");
 
     try {
-      // First, create the recipe document without image to get an ID
       const recipeData = {
         title,
         description,
@@ -88,29 +76,20 @@ const CreateRecipe = () => {
         cookTime: Number(cookTime),
         servings: Number(servings),
         category,
-        imageUrl: "", // temporary
+        imageUrl: "",
       };
 
       const recipeId = await createRecipe(recipeData, currentUser.uid);
 
-      // If there's an image, upload it and update the recipe with imageUrl
       if (image) {
         const imageUrl = await uploadRecipeImage(image, recipeId);
         await updateRecipe(recipeId, { imageUrl });
-        if (image) {
-          const imageUrl = await uploadRecipeImage(image, recipeId);
-          await updateRecipe(recipeId, { imageUrl });
-        }
-        // Update recipe with imageUrl (we'll need an update function)
-        // For now, we'll handle update separately. Let's add a function in recipeService to update image only.
-        // We'll do that later. For now, we'll skip image upload to keep it simple.
-        // Actually, we should create an update function. Let's add it now.
-        // I'll add a quick updateRecipeImage function in recipeService.
       }
 
       navigate("/");
     } catch (err) {
       setError(err.message);
+      console.error(err);
     } finally {
       setLoading(false);
     }

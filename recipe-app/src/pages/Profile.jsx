@@ -39,7 +39,6 @@ const Profile = () => {
     setSeeding(true);
     try {
       await createMultipleRecipes(sampleRecipes, currentUser.uid);
-      // Refresh the list
       const updated = await getRecipesByUser(userId);
       setRecipes(updated);
       alert("Sample recipes added successfully!");

@@ -21,7 +21,6 @@ const EditRecipe = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  // Form state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState([""]);
@@ -36,7 +35,6 @@ const EditRecipe = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch recipe data on mount
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
@@ -46,12 +44,10 @@ const EditRecipe = () => {
     const fetchRecipe = async () => {
       try {
         const recipe = await getRecipe(id);
-        // Check ownership
         if (recipe.createdBy !== currentUser.uid) {
           navigate("/");
           return;
         }
-        // Populate form fields
         setTitle(recipe.title);
         setDescription(recipe.description);
         setIngredients(recipe.ingredients || [""]);
@@ -63,16 +59,14 @@ const EditRecipe = () => {
         setExistingImageUrl(recipe.imageUrl || "");
       } catch (err) {
         setError("Failed to load recipe: " + err.message);
-        console.error("Error loading recipe:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
     fetchRecipe();
-  }, [id, currentUser, navigate]); // ✅ include all dependencies
+  }, [id, currentUser, navigate]);
 
-  // Ingredient handlers
   const handleIngredientChange = (index, value) => {
     const newIngredients = [...ingredients];
     newIngredients[index] = value;
@@ -89,7 +83,6 @@ const EditRecipe = () => {
     }
   };
 
-  // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -117,7 +110,7 @@ const EditRecipe = () => {
       navigate(`/recipe/${id}`);
     } catch (err) {
       setError(err.message);
-      console.error("Error updating recipe:", err);
+      console.error(err);
     } finally {
       setSubmitting(false);
     }
@@ -130,7 +123,6 @@ const EditRecipe = () => {
       <h1 className="text-3xl font-bold mb-6">Edit Recipe</h1>
       {error && <p className="text-red-600 mb-4">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
         <div>
           <label className="block mb-1 font-medium">Title</label>
           <input
@@ -142,7 +134,6 @@ const EditRecipe = () => {
           />
         </div>
 
-        {/* Description */}
         <div>
           <label className="block mb-1 font-medium">Description</label>
           <textarea
@@ -154,7 +145,6 @@ const EditRecipe = () => {
           />
         </div>
 
-        {/* Ingredients */}
         <div>
           <label className="block mb-1 font-medium">Ingredients</label>
           {ingredients.map((ing, index) => (
@@ -187,7 +177,6 @@ const EditRecipe = () => {
           </button>
         </div>
 
-        {/* Instructions */}
         <div>
           <label className="block mb-1 font-medium">Instructions</label>
           <textarea
@@ -199,7 +188,6 @@ const EditRecipe = () => {
           />
         </div>
 
-        {/* Prep & Cook Time */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium">
@@ -227,7 +215,6 @@ const EditRecipe = () => {
           </div>
         </div>
 
-        {/* Servings */}
         <div>
           <label className="block mb-1 font-medium">Servings</label>
           <input
@@ -239,7 +226,6 @@ const EditRecipe = () => {
           />
         </div>
 
-        {/* Category */}
         <div>
           <label className="block mb-1 font-medium">Category</label>
           <select
@@ -255,7 +241,6 @@ const EditRecipe = () => {
           </select>
         </div>
 
-        {/* Current Image Preview */}
         {existingImageUrl && (
           <div>
             <p className="mb-1">Current Image:</p>
@@ -267,7 +252,6 @@ const EditRecipe = () => {
           </div>
         )}
 
-        {/* New Image Upload */}
         <div>
           <label className="block mb-1 font-medium">New Image (optional)</label>
           <input
@@ -277,7 +261,6 @@ const EditRecipe = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={submitting}

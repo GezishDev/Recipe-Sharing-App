@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { getRecipe, deleteRecipe } from "../services/recipeService";
+import { FaClock, FaUsers } from "react-icons/fa";
 
 const RecipeDetail = () => {
   const { id } = useParams();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -18,17 +18,14 @@ const RecipeDetail = () => {
         const data = await getRecipe(id);
         setRecipe(data);
       } catch (err) {
-        // Use err.message to avoid unused variable warning
         setError(`Recipe not found: ${err.message}`);
-        // Optionally log the error for debugging
-        console.error("Error fetching recipe:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
     fetchRecipe();
-  }, [id]); // Include id in dependency array
+  }, [id]);
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this recipe?")) return;
@@ -36,9 +33,8 @@ const RecipeDetail = () => {
       await deleteRecipe(id);
       navigate("/");
     } catch (err) {
-      // Use err here as well
       alert(`Failed to delete recipe: ${err.message}`);
-      console.error("Delete error:", err);
+      console.error(err);
     }
   };
 
@@ -56,7 +52,7 @@ const RecipeDetail = () => {
             recipe.imageUrl ||
             "https://via.placeholder.com/1200x400?text=No+Image"
           }
-          alt={recipe.title || "Recipe"}
+          alt={recipe.title}
           className="w-full h-64 object-cover"
         />
         <div className="p-6">
@@ -80,10 +76,16 @@ const RecipeDetail = () => {
             )}
           </div>
           <p className="text-gray-700 text-lg mb-4">{recipe.description}</p>
-          <div className="flex space-x-6 text-sm text-gray-600 mb-4">
-            <span>Prep: {recipe.prepTime} min</span>
-            <span>Cook: {recipe.cookTime} min</span>
-            <span>Servings: {recipe.servings}</span>
+          <div className="flex space-x-6 text-gray-600 mb-4">
+            <span className="flex items-center">
+              <FaClock className="mr-1" /> Prep: {recipe.prepTime} min
+            </span>
+            <span className="flex items-center">
+              <FaClock className="mr-1" /> Cook: {recipe.cookTime} min
+            </span>
+            <span className="flex items-center">
+              <FaUsers className="mr-1" /> Serves: {recipe.servings}
+            </span>
             <span>Category: {recipe.category}</span>
           </div>
           <div className="mb-6">
