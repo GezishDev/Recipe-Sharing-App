@@ -104,30 +104,31 @@ Your app will be live at a *.vercel.app URL.
 
 Note for client‑side routing:
 The repository includes a vercel.json file (or you can use a _redirects file in the public folder) to ensure all routes are rewritten to index.html. This prevents 404 errors on direct page reloads.
-
-📁 Project Structure
-text
+📁 **Project Structure**
 Recipe-Sharing-App/
-├── public/               # Static assets (favicon, _redirects)
+├── public/ # Static assets (favicon, _redirects)
 ├── src/
-│   ├── assets/           # Images, fonts
-│   ├── components/       # Reusable UI components (NavBar, RecipeCard, Footer)
-│   ├── contexts/         # React context (AuthContext)
-│   ├── data/             # Sample recipes data
-│   ├── hooks/            # Custom hooks (useAuth)
-│   ├── pages/            # Page components (Home, RecipeDetail, Login, etc.)
-│   ├── services/         # Firebase configuration and API calls
-│   ├── App.jsx           # Main app with routes
-│   ├── main.jsx          # Entry point
-│   └── index.css         # Global styles (Tailwind)
-├── .env.example          # Example environment variables
+│ ├── assets/ # Images, fonts
+│ ├── components/ # Reusable UI components (NavBar, RecipeCard, Footer)
+│ ├── contexts/ # React context (AuthContext)
+│ ├── data/ # Sample recipes data
+│ ├── hooks/ # Custom hooks (useAuth)
+│ ├── pages/ # Page components (Home, RecipeDetail, Login, etc.)
+│ ├── services/ # Firebase configuration and API calls
+│ ├── App.jsx # Main app with routes
+│ ├── main.jsx # Entry point
+│ └── index.css # Global styles (Tailwind)
+├── .env.example # Example environment variables
 ├── .gitignore
 ├── index.html
 ├── package.json
 ├── README.md
 ├── tailwind.config.js
-├── vercel.json           # Routing configuration for Vercel
+├── vercel.json # Routing configuration for Vercel
 └── vite.config.js
+
+
+
 🤝 Contributing
 Contributions are welcome! If you have ideas for improvements or bug fixes, please:
 
