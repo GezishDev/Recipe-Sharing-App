@@ -1,7 +1,7 @@
 🍲 RecipeShare – Share & Discover Amazing Recipes
 RecipeShare is a full‑stack web application where food lovers can browse, share, and manage their favorite recipes. Built with React, Vite, Tailwind CSS, and Firebase, it offers a smooth user experience with authentication, real‑time data, and image uploads.
 
-<img src="./screenshots/Recipe_sharing_app_homepage.png" width="400" />
+<img src="./screenshots/Recipe_sharing_app_homepage.png" width="850" />
 
 ✨ Features
 🔐 User Authentication – Sign up, log in, and log out securely (Firebase Auth).
@@ -29,10 +29,15 @@ react-loading-skeleton
 
 
 📸 Screenshots
+
 Recipe Listing		
-<img src="./screenshots/Recipe_listing.png" width="400" />	
+
+<img src="./screenshots/Recipe_listing.png" width="850" />	
+
+
 Recipe Detail
-<img src="./screenshots/Recipe_detail.png" width="400" /> 
+
+<img src="./screenshots/Recipe_detail.png" width="850" /> 
 
 🧰 Getting Started
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
